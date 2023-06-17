@@ -2,7 +2,7 @@ clear all;
 clc;
 
 devs = serialportlist();
-blaze = serialport(devs(1), 9600, 'Parity','none', 'StopBits',1, 'DataBits',8);
+blaze = serialport(devs(2), 9600, 'Parity','none', 'StopBits',1, 'DataBits',8);
 configureTerminator(blaze,"LF");
 
 configureCallback(blaze,"byte", 1, @(varargin)cback(blaze));
