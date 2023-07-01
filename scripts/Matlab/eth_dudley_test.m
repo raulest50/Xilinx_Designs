@@ -2,34 +2,28 @@
 % Matlab Ethernet ArtyA7 FPGA FFT acceleration test
 
 
-cli = tcpclient('192.168.1.10', 7, "Timeout", 500);
-configureTerminator(cli,"LF");
+%cli = tcpclient('192.168.1.10', 7, "Timeout", 500);
+%configureTerminator(cli,"LF");
 
 %configureCallback(cli,"terminator", @(varargin)cback_tcp(cli));
 
-N = 8192;
-%A = 0:1:N;
-A = zeros(1, N);
-A(N/2: N/2 + 10) = 10;
-B = fft(A);
-An = complex_vector_org(B);
+%N = 8192;
+%load('inputs.mat');
+%Dh = complex_vector_org(ex_Dh);
 
-data = single(zeros(1, 2*N));
+%data = single(zeros(1, 2*N));
 
-writeline(cli, '$d');
-resp = readline(cli);
+%writeline(cli, '$d');
+%resp = readline(cli);
+%disp(resp)
 
-for i=1:64
-    write(cli, An(256*(i-1)+1 : i*256), 'single');
-end
+%for i=1:64
+%    write(cli, A, 'single');
+%end
 
-data(1:8192) = read(cli, 8192, 'single');
-writeline(cli, '$d');
-data(8193:end) = read(cli, 8192, 'single');
-
-y = data(1:2:end) + 1i*data(2:2:end);
-plot(abs(y/8192));
-
+%data(1:8192) = read(cli, 8192, 'single');
+%writeline(cli, '$d');
+%data(8193:end) = read(cli, 8192, 'single');
 
 
 % organiza un vector con numeros complejos en la forma mas conveniente
@@ -42,6 +36,7 @@ function [Y] = complex_vector_org(A)
     Af = [real(A) ; imag(A)];
     Y = Af(:);
 end
+
 
 
 % function [] = cback_tcp(cli)
