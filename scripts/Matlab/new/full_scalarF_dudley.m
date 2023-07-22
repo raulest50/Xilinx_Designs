@@ -5,10 +5,10 @@
 clear all 
 global nt;
 global dtau;
-global f_R;
+% global f_R;
 global gama;
 global A0;
-global Tshock;
+% global Tshock;
 global omega
 
 
@@ -18,10 +18,10 @@ f0=c/l0*10^-12;%in Hz
 w0=(2*pi*c/l0);%rad/s
 k0=(2*pi/l0);%in m-1
 gama=0.11;%W-1*m-1, n2=2.6*10^-20, Aeffx=0.84*10^12 m^2. gamax = (n2*w0)/(c*Aeffx), slow axes
-T0=0.0284;%in ps. T-FWHM=1.665T0 for Gaussian pulse, T-FWHM=1.763T0 for Gaussian pulse
-z=0.15;%Distance in m
-fR=0.18;%%Raman response Coefficient
-Tshock=(1/w0)*1.0e12;%%%0.56*10^-3;%%%ps
+T0=0.01;%in ps. T-FWHM=1.665T0 for Gaussian pulse, T-FWHM=1.763T0 for Gaussian pulse
+z=0.03;%Distance in m
+% fR=0.18;%%Raman response Coefficient
+% Tshock=(1/w0)*1.0e12;%%%0.56*10^-3;%%%ps
 P0=10000;%Initial Power, in W
 nt = 2^13;  % FFT points and window size
 step_num = 1500;%10^3; % Number of z steps 
@@ -83,7 +83,7 @@ end
 
 A0=A;
 %---Plot input pulses shape and spectrum
-figure; 
+% figure; 
 %subplot(3,1,1);
 %plot(tau, ((abs(A)).^2)/P0,'-r')
 %axis([-.4 .4 0 inf]);
@@ -104,15 +104,15 @@ for v=2:10
     dispbeta=dispbeta+(beta(v)/(factorial(v)))*omega.^(v);%sum of dispersion terms, for m>=2 plus dbeta1
     
 end
-dispersion_half = exp(-i*dispbeta.*deltaz/2); % Half Dispersion term, in frequency domain
+dispersion_half = exp(-1i*dispbeta.*deltaz/2); % Half Dispersion term, in frequency domain
 
 %%%%%%%% R(t)-Raman-Fourier domain%%%%%%%%%%%%
-for kk=1:nt
-    hR1(kk)=hR(tau(kk));
-end
-
-f_R=((1-fR)+dtau*fR*fft(fftshift(hR1)));%%%Raman - Frequency Domain
-
+% for kk=1:nt
+%     hR1(kk)=hR(tau(kk));
+% end
+% 
+% f_R=((1-fR)+dtau*fR*fft(fftshift(hR1)));%%%Raman - Frequency Domain
+% 
 
 % scheme: 1/2D -> N -> 1/2D; first half step nonlinear
 %exA = A;
@@ -150,6 +150,7 @@ Afin = A;
 %qw=dlmread('pw.txt');%%%%reading the power file
 l_lambda=c*10^-3./(f0+f);
 
+%% figure
 %%%%Output - Pulse last step
 Pt=((abs(A)).^2)/P0;%% Time domain
 subplot(2,1,1)%%%Wavelength-Plot
@@ -159,7 +160,7 @@ title('Output - Spectrum');
 hold on;
 %plot(l_lambda,10*log10((dtau^2/(P0))*abs(fftshift(fft(A))).^2),'-b'); %Plotting the final pulse in dB
 plot(l_lambda,10*log10((dtau^2/(P0))*abs(fftshift(fft(A))).^2),'-b');
-axis([300 1500 -100 10])
+axis([450 1500 -70 10])
 
 
 subplot(2,1,2)%%%%%Time Plot

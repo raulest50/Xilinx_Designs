@@ -5,7 +5,7 @@
 cli = tcpclient('192.168.1.10', 7, "Timeout", 500);
 configureTerminator(cli,"LF");
 
-%configureCallback(cli,"terminator", @(varargin)cback_tcp(cli));
+% configureCallback(cli,"terminator", @(varargin)cback_tcp(cli));
 
 N = 8192;
 %A = 0:1:N;
