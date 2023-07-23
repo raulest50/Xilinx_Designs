@@ -1,19 +1,21 @@
 
 #include <complex>
 
-const char FFT_CONF_WIDTH = 16;
+
 const char FFT_IN_WIDTH = 12;
+const char FFT_OUT_WIDTH = 12;
+const char FFT_CONF_WIDTH = 16;
 const char FFT_NFFT_MAX = 13;
-const char FFT_LENGTH = 1 << FFT_NFFT_MAX; // = 2^FFT_NFFT_MAX
+const int FFT_LENGTH = 1 << FFT_NFFT_MAX; // = 2^FFT_NFFT_MAX
 
 typedef ap_fixed<FFT_IN_WIDTH, 1> dty_fft_in;
 typedef ap_fixed<FFT_IN_WIDTH, 1> dty_fft_out;
 
-typedef std::complex<dty_fft_in> data_in;
-typedef std::complex<dty_fft_out> data_out;
+typedef hls::x_complex<dty_fft_in> data_in;
+typedef hls::x_complex<dty_fft_out> data_out;
 
-data_in test_signal[FFT_LENGTH] = {
- 
+static data_in test_signal[FFT_LENGTH] = {
+
 { 0.0, 0.0 },{ 0.0, 0.0 },{ 0.0, 0.0 },{ 0.0, 0.0 },
 { 0.0, 0.0 },{ 0.0, 0.0 },{ 0.0, 0.0 },{ 0.0, 0.0 },
 { 0.0, 0.0 },{ 0.0, 0.0 },{ 0.0, 0.0 },{ 0.0, 0.0 },

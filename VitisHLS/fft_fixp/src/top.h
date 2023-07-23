@@ -6,15 +6,15 @@
 
 #include "rom.h"
 
-const char FFT_CONF_WIDTH = 16;
-const char FFT_IN_WIDTH = 12;
-const char FFT_NFFT_MAX = 13;
-const char FFT_LENGTH = 1 << FFT_NFFT_MAX; // = 2^FFT_NFFT_MAX
+using namespace std;
 
-struct config1 : hls::ip_fft::params_t{
+struct config1 : hls::ip_fft::params_t {
 	static const unsigned ordering_opt = hls::ip_fft::natural_order;
 	static const unsigned config_width = FFT_CONF_WIDTH;
-
+	static const unsigned input_width = 12;
+	static const unsigned output_width = 12;
+	static const unsigned scaling_opt = hls::ip_fft::scaled;
+	static const unsigned rounding_opt = hls::ip_fft::truncation;
 };
 
 
@@ -28,6 +28,10 @@ void do_fft(
 		);
 
 void Dh1(data_in Ain[FFT_LENGTH], data_out Aout[FFT_LENGTH]);
+
+void dt_mover_in(data_in vin[FFT_LENGTH], data_out vout[FFT_LENGTH]);
+
+void dt_mover_out(data_in vin[FFT_LENGTH], data_out vout[FFT_LENGTH]);
 
 
 

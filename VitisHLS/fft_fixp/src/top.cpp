@@ -40,6 +40,8 @@ void do_fft(
 		data_in xn[FFT_LENGTH],
 		data_out xk[FFT_LENGTH] )
 {
+#pragma HLS dataflow
+#pragma HLS INLINE recursive
 
 	config_t fft_config;
 	status_t fft_status;

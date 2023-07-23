@@ -25,17 +25,23 @@ impulse[4000:4010] = 50
 chirp = sin(linspace(0, 2*pi, N)**8/10000)
 view_signal(chirp)
 
-
-complex_data_string = ar2str(chirp, 16)
+chirp_fxp = Fxp(chirp, signed=True, n_word=12, n_frac=10)
+view_signal(chirp_fxp)
+complex_data_string = ar2str(chirp_fxp, 4)
 
 body = f"""
 #include <complex>
 
-typedef std::complex<dty_fft_in> data_in;
-typedef std::complex<dty_fft_out> data_out;
+const char FFT_CONF_WIDTH = 16;
+const char FFT_IN_WIDTH = 12;
+const char FFT_NFFT_MAX = 13;
+const char FFT_LENGTH = 1 << FFT_NFFT_MAX; // = 2^FFT_NFFT_MAX
 
 typedef ap_fixed<FFT_IN_WIDTH, 1> dty_fft_in;
 typedef ap_fixed<FFT_IN_WIDTH, 1> dty_fft_out;
+
+typedef std::complex<dty_fft_in> data_in;
+typedef std::complex<dty_fft_out> data_out;
 
 data_in test_signal[FFT_LENGTH] = {{
  
